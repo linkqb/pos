@@ -14,53 +14,62 @@ const description =
   <main class="kode-pos-page">
     <div class="kode-pos-container">
 
-      <nav class="kode-pos-breadcrumb" aria-label="Breadcrumb">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="/">Beranda</a>
         <span>/</span>
         <span>Kode Pos</span>
       </nav>
 
-      <header class="kodepos-header">
-        <span class="kodepos-eyebrow">Kode Pos Indonesia</span>
+      <header class="page-heading">
+        <span class="eyebrow">Kode Pos Indonesia</span>
 
         <h1>Kode Pos Indonesia</h1>
 
-        <p class="kodepos-lead">
+        <p>
           Pilih provinsi untuk mencari kode pos berdasarkan wilayah.
         </p>
       </header>
 
-      <section class="kodepos-search" aria-labelledby="province-list">
-        <div class="kodepos-section-heading">
+      <section class="content-section" aria-labelledby="province-list">
+
+        <div class="section-heading">
           <div>
-            <span class="kodepos-section-eyebrow">Wilayah</span>
             <h2 id="province-list">Pilih Provinsi</h2>
           </div>
 
-          <span class="kodepos-count">
+          <span class="count">
             {provinces.length} provinsi
           </span>
         </div>
 
         {provinces.length > 0 ? (
-          <div class="kodepos-grid">
-            {provinces.map((province) => (
+          <div class="region-grid">
+            {provinces.map((province, index) => (
               <a
-                class="kodepos-card"
+                class="region-card"
                 href={kodePosUrl(province.slug)}
               >
-                <div class="kodepos-card-content">
-                  <h2>{province.name}</h2>
-                  <p>Lihat kabupaten dan kota</p>
-                </div>
+                <span class="region-number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
 
-                <span class="kodepos-card-arrow">→</span>
+                <span class="region-info">
+                  <strong>{province.name}</strong>
+                  <small>Lihat kabupaten dan kota</small>
+                </span>
+
+                <span class="arrow" aria-hidden="true">
+                  →
+                </span>
               </a>
             ))}
           </div>
         ) : (
-          <p>Data provinsi belum tersedia.</p>
+          <div class="empty-state">
+            Data provinsi belum tersedia.
+          </div>
         )}
+
       </section>
 
     </div>
