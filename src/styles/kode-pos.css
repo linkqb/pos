@@ -131,59 +131,6 @@ tbody tr:hover { background: #fafbfc; }
 
 
 
-.search-form {
-  display: flex;
-  gap: 10px;
-  max-width: 760px;
-}
-
-.search-form input {
-  flex: 1;
-  min-width: 0;
-  height: 48px;
-  padding: 0 16px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: white;
-  color: var(--text);
-  font: inherit;
-  outline: none;
-}
-
-.search-form input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
-}
-
-.search-form button {
-  height: 48px;
-  padding: 0 22px;
-  border: 0;
-  border-radius: 10px;
-  background: var(--text);
-  color: white;
-  font: inherit;
-  font-weight: 650;
-  cursor: pointer;
-}
-
-.search-form button:hover {
-  opacity: .9;
-}
-
-@media (max-width: 600px) {
-  .search-form {
-    flex-direction: column;
-  }
-
-  .search-form button {
-    width: 100%;
-  }
-}
-
-
-
-
 
 
 
