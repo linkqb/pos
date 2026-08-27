@@ -1,0 +1,145 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+const q = Astro.url.searchParams.get("q")?.trim() || "";
+
+const canonicalUrl = q
+  ? `${Astro.site ?? Astro.url.origin}/kode-pos/cari/`
+  : Astro.url.href;
+---
+
+<MainLayout
+  title={q ? `Cari Kode Pos: ${q}` : "Cari Kode Pos"}
+  description="Cari kode pos berdasarkan provinsi, kabupaten atau kota, kecamatan, kelurahan atau desa."
+  canonical={canonicalUrl}
+>
+  <main class="kode-pos-page">
+    <div class="kode-pos-container">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/kode-pos/">Kode Pos</a>
+        <span>/</span>
+        <span>Pencarian</span>
+      </nav>
+
+      <header class="page-heading">
+        <span class="eyebrow">Pencarian</span>
+        <h1>Cari Kode Pos</h1>
+        <p>
+          Cari provinsi, kabupaten/kota, kecamatan,
+          kelurahan/desa, atau kode pos.
+        </p>
+      </header>
+
+      <section class="content-section">
+
+        <form
+          method="get"
+          action="/kode-pos/cari/"
+          class="search-form"
+        >
+          <input
+            type="search"
+            name="q"
+            value={q}
+            placeholder="Contoh: Aceh, Bandung, 40123..."
+            autocomplete="off"
+            aria-label="Kata pencarian"
+          />
+
+          <button type="submit">
+            Cari
+          </button>
+        </form>
+
+        {q ? (
+          <div style="margin-top: 32px;">
+            <div class="section-heading">
+              <h2>Hasil pencarian</h2>
+            </div>
+
+            <p>
+              Kata pencarian:
+              <strong>{q}</strong>
+            </p>
+
+            <div id="search-results" class="list-grid">
+              <div class="empty-state">
+                Memuat hasil pencarian...
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div class="empty-state">
+            Masukkan nama wilayah atau kode pos untuk mencari.
+          </div>
+        )}
+
+      </section>
+
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get("q")?.trim() || "";
+  const results = document.querySelector("#search-results");
+
+  if (q && results) {
+    fetch(
+      `https://api-kodepos.linkq.workers.dev/api/kode-pos/search?q=${encodeURIComponent(q)}`
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        const data = json.data || [];
+
+        if (!data.length) {
+          results.innerHTML = `
+            <div class="empty-state">
+              Tidak ditemukan hasil untuk
+              <strong>${q}</strong>.
+            </div>
+          `;
+          return;
+        }
+
+        results.innerHTML = data.map((item) => `
+          <a
+            class="list-card"
+            href="/kode-pos/${slugify(item.prov_name)}/${slugify(item.city_name)}/${slugify(item.dis_name)}/"
+          >
+            <span>
+              <strong>${item.subdis_name}</strong>
+              <small>
+                ${item.dis_name}, ${item.city_name}, ${item.prov_name}
+              </small>
+            </span>
+
+            <span class="postal-code">
+              ${item.postal_code}
+            </span>
+
+            <span class="arrow">→</span>
+          </a>
+        `).join("");
+      })
+      .catch(() => {
+        results.innerHTML = `
+          <div class="empty-state">
+            Gagal memuat hasil pencarian.
+          </div>
+        `;
+      });
+  }
+
+  function slugify(value) {
+    return value
+      .toLowerCase()
+      .trim()
+      .replace(/&/g, "dan")
+      .replace(/[^a-z0-9\\s-]/g, "")
+      .replace(/\\s+/g, "-")
+      .replace(/-+/g, "-");
+  }
+</script>
