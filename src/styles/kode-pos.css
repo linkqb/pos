@@ -180,3 +180,82 @@ tbody tr:hover { background: #fafbfc; }
     width: 100%;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.header-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  margin-right: 24px;
+}
+
+.header-search input {
+  width: 220px;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: white;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.header-search input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.header-search button {
+  height: 38px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--text);
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.header-search button:hover {
+  opacity: .9;
+}
+
+@media (max-width: 700px) {
+  .site-header-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  .header-search {
+    order: 3;
+    width: 100%;
+    margin: 0;
+  }
+
+  .header-search input {
+    width: 100%;
+  }
+
+  .site-nav {
+    margin-left: auto;
+  }
+}
