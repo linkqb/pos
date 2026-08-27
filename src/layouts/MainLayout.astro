@@ -37,18 +37,43 @@ const canonicalUrl = canonical || Astro.url.href;
   <title>{title}</title>
 </head>
 <body>
-  <header class="site-header">
-    <div class="site-header-inner">
-      <a class="brand" href="/kode-pos/" aria-label="Kode Pos Indonesia">
-        <span class="brand-mark">KP</span>
-        <span>Kode Pos</span>
-      </a>
-      <nav class="site-nav" aria-label="Navigasi utama">
-        <a href="/kode-pos/">Kode Pos</a>
-        <a href="/blog/">Blog</a>
-      </nav>
-    </div>
-  </header>
+<header class="site-header">
+  <div class="site-header-inner">
+
+    <a
+      class="brand"
+      href="/kode-pos/"
+      aria-label="Kode Pos Indonesia"
+    >
+      <span class="brand-mark">KP</span>
+      <span>Kode Pos</span>
+    </a>
+
+    <form
+      class="header-search"
+      method="get"
+      action="/kode-pos/cari/"
+    >
+      <input
+        type="search"
+        name="q"
+        placeholder="Cari kode pos..."
+        aria-label="Cari kode pos"
+        autocomplete="off"
+      />
+
+      <button type="submit" aria-label="Cari">
+        Cari
+      </button>
+    </form>
+
+    <nav class="site-nav" aria-label="Navigasi utama">
+      <a href="/kode-pos/">Kode Pos</a>
+      <a href="/blog/">Blog</a>
+    </nav>
+
+  </div>
+</header>
 
   <slot />
 
